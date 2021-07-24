@@ -1,0 +1,62 @@
+<!-- 로그인과 회원정보를 보는 페이지 -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/css/main.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="profile-wrap">
+        <div class="profile">
+          {% if user and user.id %}
+            <div class="user-name">{{'안녕하세요! ' + user.nick + '님'}}</div>
+            <br> <br> <br> <br>
+          <input id="my-id" type="hidden" value="{{user.id}}">
+          <a id="my-profile" href="/profile" class="btn">내 프로필</a>
+          <a id="logout" href="/auth/logout" class="btn">로그아웃</a>
+          <a id="trip" href="/trip" class="btn">예약하러 🎫✈</a>
+       
+          <input type="radio" name="chk_info" value="asc" onclick="location.href='/order'">오래된 순
+          <input type="radio" name="chk_info" value="desc" onclick="location.href='/'">최신 순
+        {% else %}
+          <form id="login-form" action="/auth/login" method="post">
+            <div class="input-group" style="color: ivory;">
+              <label for="email">이메일</label>
+              <input id="email" type="email" name="email" required autofocus>
+            </div>
+            <div class="input-group">
+              <label for="password" style="color: ivory;">비밀번호</label>
+              <input id="password" type="password" name="password" required>
+            </div>
+            <a id="join" href="/join" class="btn">회원가입</a>
+            <button id="login" type="submit" class="btn">로그인</button>
+            <a id="kakao" href="/auth/kakao" class="btn">카카오톡</a>
+          </form>
+        {% endif %}
+        </div>
+        <footer>
+          Made by&nbsp;
+          <a>60191680 이찬희</a>
+        </footer>
+      </div>
+      {% block content %}
+      {% endblock %}
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      window.onload = () => {
+        if (new URL(location.href).searchParams.get('loginError')) {
+          alert(new URL(location.href).searchParams.get('loginError'));
+        }
+      };
+
+
+    </script>
+    {% block script %}
+    {% endblock %}
+  </body>
+</html>

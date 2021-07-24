@@ -1,0 +1,69 @@
+<!-- 타임라인 연관 -->
+{% extends 'layout.html' %}
+
+
+{% block content %}
+    <div class="timeline">
+      {% if user %}
+        <div>
+          
+        </div>
+      {% endif %}
+
+         <!--사용자의 예약현황과 프로필 사진 표시-->
+        {% for twit in twits %} 
+          <div class="twit">
+            {% if not twit.img %}
+            <input type="hidden" value="{{twit.User.id}}" class="twit-user-id">
+            <input type="hidden" value="{{twit.id}}" class="twit-id">
+            <div class="twit-author">{{twit.User.nick}} 님, {{twit.place}}</div>
+            <div class="twit-content">예정 여행 시작일: {{twit.content}}</div>
+            <!-- <form name="question" method="post" action="/post/del">
+              <input type="hidden" name="_method" value="delete"/>
+              <button type="submit" class="btn"> 삭제</button>
+          </form> -->
+          
+            {% elif twit.img %}
+            <input type="hidden" value="{{twit.User.id}}" class="twit-user-id">
+            <input type="hidden" value="{{twit.id}}" class="twit-id">
+            <div class="twit-author">{{twit.User.nick}} 님, 프로필 사진 변경</div>
+           <!-- img에 대한 경로를 받아옴 그렇기에 main에서 static 사용-->
+              <div class="twit-img"><img src="{{twit.img}}" alt="썸네일"></div> 
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+  <script>
+    if (document.getElementById('img')) { 
+      //id가 이미지인 곳에 변화가 있으면 코드실행  
+      document.getElementById('img').addEventListener('change', function(e) { 
+        const formData = new FormData();
+        console.log(this, this.files);
+        formData.append('img', this.files[0]);
+        axios.post('/post/img', formData) //post.js로 연결 
+          .then((res) => {
+            // 이미지 요청의 경로가 저장되어 있음 
+            document.getElementById('img-url').value = res.data.url;
+            document.getElementById('img-preview').src = res.data.url;
+            document.getElementById('img-preview').style.display = 'inline';
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      });
+    }
+  
+    function upload() {
+      const edit = prompt('입력');
+      if (!edit) {
+        return alert('내용을 반드시 입력하셔야 합니다');
+      }
+      alert(edit);
+      
+    }      
+  </script>
+{% endblock %}

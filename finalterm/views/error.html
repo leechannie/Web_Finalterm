@@ -1,0 +1,8 @@
+<!-- 에러를 다루는 페이지 -->
+{% extends 'layout.html' %}
+
+{% block content %}
+  <h1>{{message}}</h1>
+  <h2>{{error.status}}</h2>
+  <pre>{{error.stack}}</pre>
+{% endblock %}
