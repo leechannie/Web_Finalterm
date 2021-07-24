@@ -1,7 +1,7 @@
 # Web_Finalterm
 
 ## 2021 고급 웹프로그래밍 기말 프로젝트 
-> MySQL과 HTML, JavaScript를 활용한 여행 예약 Web Page
+> MySQL과 Nodejs, HTML, JavaScript를 활용한 여행 예약 Web Page
 
 ## npm start
 >Runs the app in the development mode. Open http://localhost:8000 to view it in the browser. <br><br>
